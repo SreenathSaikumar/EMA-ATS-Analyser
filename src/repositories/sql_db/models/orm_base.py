@@ -34,7 +34,7 @@ class BaseModel:
         query = select(cls).where(*where_clauses)
         async with session_factory() as session:
             res = await session.execute(query)
-            return res.scalars()
+            return res.scalars().all()
 
 
 

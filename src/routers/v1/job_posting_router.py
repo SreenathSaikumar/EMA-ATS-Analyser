@@ -7,6 +7,7 @@ class JobPostingRouter(RouterBase):
         self.__job_posting_controller = JobPostingController()
 
     def get_router(self):
-        self.__router.add_api_route("/", self.__job_posting_controller.create_job_posting, methods=["POST"])
-        self.__router.add_api_route("/", self.__job_posting_controller.list_job_postings, methods=["GET"])
-        return self.__router
+        router = super().get_router()
+        router.add_api_route("/", self.__job_posting_controller.create_job_posting, methods=["POST"])
+        router.add_api_route("/", self.__job_posting_controller.list_job_postings, methods=["GET"])
+        return router

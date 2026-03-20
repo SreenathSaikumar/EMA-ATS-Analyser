@@ -1,18 +1,18 @@
 """Add ATS tables
 
-Revision ID: 8a37d9c0ab59
+Revision ID: a38597b9b107
 Revises: 
-Create Date: 2026-03-20 17:22:15.066467
+Create Date: 2026-03-20 17:45:07.343545
 
 """
 from typing import Sequence, Union
 
 from alembic import op
 import sqlalchemy as sa
-
+from sqlalchemy.dialects import mysql
 
 # revision identifiers, used by Alembic.
-revision: str = '8a37d9c0ab59'
+revision: str = 'a38597b9b107'
 down_revision: Union[str, Sequence[str], None] = None
 branch_labels: Union[str, Sequence[str], None] = None
 depends_on: Union[str, Sequence[str], None] = None
@@ -25,7 +25,7 @@ def upgrade() -> None:
     sa.Column('name', sa.String(length=300), nullable=False),
     sa.Column('relevance_score', sa.DECIMAL(precision=1), nullable=True),
     sa.Column('reasoning', sa.Text(), nullable=True),
-    sa.Column('resume', sa.LargeBinary(), nullable=False),
+    sa.Column('resume', mysql.LONGBLOB(), nullable=False),
     sa.Column('resume_file_type', sa.String(length=100), nullable=False),
     sa.Column('resume_file_name', sa.String(length=100), nullable=False),
     sa.Column('id', sa.BigInteger(), nullable=False),

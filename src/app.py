@@ -9,6 +9,7 @@ logger = logging.getLogger(__name__)
 
 app = FastAPI(title="ATS Analyser", description="ATS Analyser")
 
+
 @app.on_event("startup")
 async def startup_event():
     logger.info("Starting up...")
@@ -16,6 +17,7 @@ async def startup_event():
     routers = await api_container.get_routers()
     for router in routers:
         app.include_router(router)
+
 
 @app.on_event("shutdown")
 async def shutdown_event():

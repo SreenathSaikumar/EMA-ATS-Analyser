@@ -15,19 +15,19 @@ class ApplicationController(BaseController):
 
     async def create_application(self, job_id: int = Path(...), name: str = Form(...), resume: UploadFile = File(...), session: AsyncSession = Depends(get_db_session)) -> JSONResponse:
         try:
-            self.__logger.info(f"Creating application: {name}, {resume} {job_id}")
+            self._logger.info(f"Creating application: {name}, {resume} {job_id}")
             await self.__application_service.create_application(session, job_id, name, resume)
-            return JSONResponse(status_code=status.HTTP_201_CREATED)
+            return JSONResponse(status_code=status.HTTP_201_CREATED, content={"message": "Application created successfully"})
         except Exception as e:
-            self.__logger.error(f"Error creating application: {e}")
+            self._logger.error(f"Error creating application: {e}")
             return JSONResponse(status_code=status.HTTP_500_INTERNAL_SERVER_ERROR, content={"message": "Error creating application"})
 
     async def list_applications(self, job_id: int = Path(...), session: AsyncSession = Depends(get_db_session)) -> JSONResponse:
         try:
-            self.__logger.info(f"Listing applications: {job_id}")
+            self._logger.info(f"Listing applications: {job_id}")
             applications = await self.__application_service.list_applications(session, job_id)
             res = {"data": applications}
             return JSONResponse(status_code=status.HTTP_200_OK, content=jsonable_encoder(res))
         except Exception as e:
-            self.__logger.error(f"Error listing applications: {e}")
+            self._logger.error(f"Error listing applications: {e}")
             return JSONResponse(status_code=status.HTTP_500_INTERNAL_SERVER_ERROR, content={"message": "Error listing applications"})

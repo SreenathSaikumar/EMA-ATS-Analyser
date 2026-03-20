@@ -8,5 +8,6 @@ class HealthCheckRouter(RouterBase):
         self.__health_check_controller = HealthCheckController()
 
     def get_router(self):
-        self.__router.add_api_route("/health", self.__health_check_controller.check_health, methods=["GET"])
-        return self.__router
+        router = super().get_router()
+        router.add_api_route("/health", self.__health_check_controller.check_health, methods=["GET"])
+        return router

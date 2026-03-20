@@ -5,4 +5,4 @@ logger = getLogger(__name__)
 
 class BaseController(ABC):
     def __init__(self):
-        self.__logger = logger
+        self._logger = logger

@@ -10,7 +10,7 @@ class HealthCheckController(BaseController):
         self.__health_check_service = HealthCheckService()
 
     async def check_health(self) -> JSONResponse:
-        self.__logger.info("Checking health...")
+        self._logger.info("Checking health...")
         if await self.__health_check_service.check_db_health():
             return JSONResponse(status_code=status.HTTP_200_OK, content={"message": "OK"})
         else:
