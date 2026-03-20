@@ -1,0 +1,85 @@
+services:
+  api:
+    build: .
+    container_name: ats-analyser-api
+    # Bind to 0.0.0.0 so Docker port publishing works.
+    command:
+      - bash
+      - -c
+      - granian src.app:app --interface asgi --host 0.0.0.0 --port 8001
+    ports:
+      - "8001:8001"
+    environment:
+      # Database (used by src/config/env_vars.py at import time)
+      DB_HOST: mysql
+      DB_PORT: 3306
+      DB_DATABASE: ats_analyser
+      DB_USERNAME: root
+      DB_PASSWORD: root
+      DB_POOL_SIZE: 5
+      DB_MAX_OVERFLOW: 10
+
+      # Required by src/config/env_vars.py at import time (provide placeholders for local dev).
+      OPENAI_API_KEY: "dummy"
+      OPENAI_API_BASE: "https://api.openai.com/v1"
+      OPENAI_API_VERSION: "v1"
+      OPENAI_API_MODEL: "gpt-4o-mini"
+      OPENAI_API_MODEL_VERSION: "latest"
+
+      # Required by src/config/env_vars.py at import time (this repo currently doesn't start RabbitMQ).
+      RMQ_URI: "amqp://guest:guest@rabbitmq:5672//"
+
+      # SQS (for localstack; only needed if/when your code starts using SQS).
+      AWS_ACCESS_KEY_ID: localstack
+      AWS_SECRET_ACCESS_KEY: localstack
+      AWS_REGION: us-east-1
+      SQS_ENDPOINT_URL: http://localstack:4566
+    depends_on:
+      - mysql
+      - localstack
+    networks:
+      - ats-net
+
+  mysql:
+    image: mysql:8.0
+    container_name: ats-analyser-mysql
+    command:
+      - mysqld
+      - --default-authentication-plugin=mysql_native_password
+    restart: unless-stopped
+    environment:
+      MYSQL_ROOT_PASSWORD: root_password
+      MYSQL_DATABASE: ats_analyser
+      MYSQL_USER: ats_user
+      MYSQL_PASSWORD: ats_password
+    ports:
+      - "3306:3306"
+    volumes:
+      - mysql_data:/var/lib/mysql
+    networks:
+      - ats-net
+
+  localstack:
+    image: localstack/localstack:2
+    container_name: ats-analyser-localstack
+    environment:
+      - SERVICES=sqs
+      - DEBUG=0
+      - AWS_ACCESS_KEY_ID=localstack
+      - AWS_SECRET_ACCESS_KEY=localstack
+      - AWS_DEFAULT_REGION=us-east-1
+    ports:
+      - "4566:4566"
+    volumes:
+      - localstack_data:/tmp/localstack
+    networks:
+      - ats-net
+
+volumes:
+  mysql_data:
+  localstack_data:
+
+
+networks:
+  ats-net:
+    driver: bridge

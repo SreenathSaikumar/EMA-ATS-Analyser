@@ -1,3 +1,10 @@
 echo "Starting FastAPI app"
 
-granian src/app:app --interface asgi --host 127.0.0.1 --port 8001
+if alembic upgrade head; then
+    echo "Migrations applied successfully"
+else
+    echo "Failed to apply migrations"
+    exit 1
+fi
+
+granian src/app:app --interface asgi --host 0.0.0.0 --port 8001

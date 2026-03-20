@@ -5,7 +5,8 @@ from sqlalchemy import pool
 
 from alembic import context
 
-from src.repositories.sql_db.models import BaseModel
+from src.repositories.sql_db.models import ORMBase
+from src.config.env_vars import GlobalConfig
 
 # this is the Alembic Config object, which provides
 # access to the values within the .ini file in use.
@@ -20,7 +21,7 @@ if config.config_file_name is not None:
 # for 'autogenerate' support
 # from myapp import mymodel
 # target_metadata = mymodel.Base.metadata
-target_metadata = BaseModel.metadata
+target_metadata = ORMBase.metadata
 
 # other values from the config, defined by the needs of env.py,
 # can be acquired:
@@ -40,7 +41,8 @@ def run_migrations_offline() -> None:
     script output.
 
     """
-    url = config.get_main_option("sqlalchemy.url")
+    # url = config.get_main_option("sqlalchemy.url")
+    url = GlobalConfig.db.sync_url
     context.configure(
         url=url,
         target_metadata=target_metadata,
@@ -60,7 +62,8 @@ def run_migrations_online() -> None:
 
     """
     connectable = engine_from_config(
-        config.get_section(config.config_ini_section, {}),
+        # config.get_section(config.config_ini_section, {}),
+        {"sqlalchemy.url": GlobalConfig.db.sync_url},
         prefix="sqlalchemy.",
         poolclass=pool.NullPool,
     )
