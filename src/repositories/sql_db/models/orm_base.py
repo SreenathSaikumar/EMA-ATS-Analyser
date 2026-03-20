@@ -1,16 +1,26 @@
 from typing import Self
 
-from sqlalchemy.orm import DeclarativeBase, declarative_mixin, session, sessionmaker, declared_attr
+from sqlalchemy.orm import (
+    DeclarativeBase,
+    declarative_mixin,
+    session,
+    sessionmaker,
+    declared_attr,
+)
 from sqlalchemy.ext.asyncio import AsyncSession
 from sqlalchemy import Column, Integer, DateTime, BigInteger, select, func
 from datetime import datetime
 
 from src.common.commons_container import common_utils
 
-session_factory = sessionmaker(common_utils.db_engine, class_=AsyncSession, autoflush=False, expire_on_commit=False)
+session_factory = sessionmaker(
+    common_utils.db_engine, class_=AsyncSession, autoflush=False, expire_on_commit=False
+)
+
 
 class ORMBase(DeclarativeBase):
     pass
+
 
 @declarative_mixin
 class BaseModel:
@@ -20,9 +30,16 @@ class BaseModel:
         return cls.__name__.lower()
 
     id = Column(BigInteger, primary_key=True)
-    created_at = Column(DateTime, default=func.now(), server_default=func.now(), nullable=False)
-    updated_at = Column(DateTime, default=func.now(), server_default=func.now(), onupdate=func.now(), nullable=False)
-
+    created_at = Column(
+        DateTime, default=func.now(), server_default=func.now(), nullable=False
+    )
+    updated_at = Column(
+        DateTime,
+        default=func.now(),
+        server_default=func.now(),
+        onupdate=func.now(),
+        nullable=False,
+    )
 
     @classmethod
     async def get(cls, id: int) -> Self | None:
@@ -36,5 +53,16 @@ class BaseModel:
             res = await session.execute(query)
             return res.scalars().all()
 
+    async def save(self) -> None:
+        async with session_factory() as session:
+            async with session.begin():
+                session.add(self)
+                await session.flush()
 
-
+    async def save_and_refresh(self) -> Self:
+        async with session_factory() as session:
+            async with session.begin():
+                session.add(self)
+                await session.flush()
+            await session.refresh(self)
+        return self

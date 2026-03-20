@@ -19,6 +19,8 @@ aiobotocore = "^3.3.0"
 cryptography = "^46.0.5"
 python-multipart = "^0.0.22"
 greenlet = "^3.3.2"
+langchain-community = "^0.4.1"
+pymupdf = "^1.27.2.2"
 
 
 [build-system]
