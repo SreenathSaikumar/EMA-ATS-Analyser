@@ -3,6 +3,7 @@ import logging
 from fastapi import FastAPI
 
 from src.containers.api_container import ApiContainer
+from src.common.commons_container import common_utils
 
 logging.basicConfig(level=logging.INFO)
 logger = logging.getLogger(__name__)
@@ -22,3 +23,4 @@ async def startup_event():
 @app.on_event("shutdown")
 async def shutdown_event():
     logger.info("Shutting down...")
+    await common_utils.shutdown()

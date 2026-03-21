@@ -5,6 +5,7 @@ from pydantic import BaseModel
 
 load_dotenv()
 
+
 class DbConfig(BaseModel):
     host: str = os.getenv("MYSQL_DB_HOST")
     port: int = os.getenv("MYSQL_DB_PORT")
@@ -22,6 +23,7 @@ class DbConfig(BaseModel):
     def sync_url(self) -> str:
         return f"mysql+pymysql://{self.username}:{self.password}@{self.host}:{self.port}/{self.database}"
 
+
 class OpenaiConfig(BaseModel):
     api_key: str = os.getenv("OPENAI_API_KEY")
     api_base: str = os.getenv("OPENAI_API_BASE")
@@ -30,12 +32,20 @@ class OpenaiConfig(BaseModel):
     api_model_version: str = os.getenv("OPENAI_API_MODEL_VERSION")
     api_model_version: str = os.getenv("OPENAI_API_MODEL_VERSION")
 
+
 class SqsConfig(BaseModel):
     endpoint_url: str = os.getenv("SQS_ENDPOINT_URL")
+    queue_name: str = os.getenv("SQS_QUEUE_NAME")
+
+    @property
+    def queue_url(self) -> str:
+        return f"{self.endpoint_url}/{self.queue_name}"
+
 
 class EnvVars(BaseModel):
     db: DbConfig = DbConfig()
     openai: OpenaiConfig = OpenaiConfig()
     sqs: SqsConfig = SqsConfig()
+
 
 GlobalConfig = EnvVars()

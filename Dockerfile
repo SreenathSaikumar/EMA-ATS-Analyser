@@ -12,4 +12,6 @@ RUN poetry install --no-venv
 
 COPY . .
 
+RUN rm -f .env
+
 CMD ["bash", "start.sh"]

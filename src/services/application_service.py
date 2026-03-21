@@ -3,6 +3,8 @@ from fastapi import UploadFile, status
 from fastapi.exceptions import HTTPException
 
 from sqlalchemy.ext.asyncio import AsyncSession
+
+from src.common.commons_container import common_utils
 from src.repositories.sql_db.models.ats_models import Application, JobDescription
 from src.utils.enums import ProcessingStatus
 
@@ -35,6 +37,8 @@ class ApplicationService:
         )
         session.add(application)
         await session.flush()
+        await session.commit()
+        await self.__dispatch_application_process_job(application)
         return application
 
     async def list_applications(
@@ -51,3 +55,13 @@ class ApplicationService:
     async def __check_job_exists(self, session: AsyncSession, job_id: int) -> bool:
         job = await JobDescription.get(job_id)
         return job is not None
+
+    async def __dispatch_application_process_job(
+        self, application: Application
+    ) -> None:
+        await common_utils.sqs_producer.send_message(
+            {
+                "application_id": application.id,
+                "job_description_id": application.job_id,
+            }
+        )
