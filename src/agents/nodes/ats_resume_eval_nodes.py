@@ -172,7 +172,7 @@ async def extract_resume_skills(state: GraphState) -> GraphStatePartial:
             prompt=prompt, output_model=ResumeSkillsExtractionOutput
         ),
     )
-    logger.info("Node extract_resume_skills extracted=%d", len(output.resume_skills))
+    logger.info(f"Node extract_resume_skills extracted={output.resume_skills}")
     return {"resume_skills": output.resume_skills}
 
 
@@ -227,9 +227,7 @@ async def extract_resume_education(state: GraphState) -> GraphStatePartial:
             prompt=prompt, output_model=ResumeEducationExtractionOutput
         ),
     )
-    logger.info(
-        "Node extract_resume_education extracted=%d", len(output.resume_education)
-    )
+    logger.info(f"Node extract_resume_education extracted={output.resume_education}")
     return {"resume_education": output.resume_education}
 
 
@@ -246,9 +244,7 @@ async def extract_jd_requirements(state: GraphState) -> GraphStatePartial:
         ),
     )
     logger.info(
-        "Node extract_jd_requirements jd_experience=%d skills=%d",
-        output.jd_experience,
-        len(output.jd_skills),
+        f"Node extract_jd_requirements jd_experience={output.jd_experience} skills={output.jd_skills}"
     )
     return {
         "jd_skills": output.jd_skills,
@@ -271,9 +267,7 @@ def normalize_entities(state: GraphState) -> GraphStatePartial:
     normalized_jd = _unique_preserve_order([s for s in normalized_jd if s])
 
     logger.info(
-        "Node normalize_entities normalized_resume=%d normalized_jd=%d",
-        len(normalized_resume),
-        len(normalized_jd),
+        f"Node normalize_entities normalized_resume={normalized_resume} normalized_jd={normalized_jd}"
     )
     return {
         "normalized_resume_skills": normalized_resume,
@@ -322,7 +316,7 @@ def match_skills(state: GraphState) -> GraphStatePartial:
     score = float(len(matched)) / float(max(len(normalized_jd_skills), 1))
     score = max(0.0, min(1.0, score))
 
-    logger.info("Node match_skills score=%.3f missing=%d", score, len(missing))
+    logger.info(f"Node match_skills score={score} missing={missing}")
     return {"skills_match_score": score, "missing_skills": missing}
 
 
@@ -344,10 +338,7 @@ def match_experience(state: GraphState) -> GraphStatePartial:
 
     score = max(0.0, min(1.0, float(score)))
     logger.info(
-        "Node match_experience years_relevant=%.2f jd_experience=%d score=%.3f",
-        years_relevant,
-        jd_experience,
-        score,
+        f"Node match_experience years_relevant={years_relevant} jd_experience={jd_experience} score={score}"
     )
     return {"experience_match_score": score}
 
@@ -374,7 +365,7 @@ def match_role(state: GraphState) -> GraphStatePartial:
     score = float(len(intersection)) / float(max(len(jd_tokens), 1))
     score = max(0.0, min(1.0, score))
 
-    logger.info("Node match_role score=%.3f jd_tokens=%d", score, len(jd_tokens))
+    logger.info(f"Node match_role score={score} jd_tokens={jd_tokens}")
     return {"role_match_score": score}
 
 
@@ -388,11 +379,7 @@ def compute_score(state: GraphState) -> GraphStatePartial:
     final = max(0.0, min(1.0, float(final)))
 
     logger.info(
-        "Node compute_score skills=%.3f exp=%.3f role=%.3f final=%.3f",
-        skills_score,
-        experience_score,
-        role_score,
-        final,
+        f"Node compute_score skills={skills_score} exp={experience_score} role={role_score} final={final}"
     )
     return {"final_score": final}
 
@@ -425,9 +412,7 @@ async def generate_explanation(state: GraphState) -> GraphStatePartial:
     )
 
     logger.info(
-        "Node generate_explanation strengths=%d weaknesses=%d",
-        len(output.strengths),
-        len(output.weaknesses),
+        f"Node generate_explanation strengths={output.strengths} weaknesses={output.weaknesses}"
     )
     return {
         "explanation": output.explanation,
