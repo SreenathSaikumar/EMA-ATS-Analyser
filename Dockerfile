@@ -1,4 +1,4 @@
-FROM python:3.12-slim
+FROM python:3.12.3-slim
 
 ENV PYTHONUNBUFFERED=1
 
@@ -8,10 +8,12 @@ RUN pip install poetry==1.8.2
 
 COPY pyproject.toml poetry.lock ./
 
-RUN poetry install --no-venv
+RUN poetry config virtualenvs.create false
+
+RUN poetry install --no-interaction
 
 COPY . .
 
 RUN rm -f .env
 
-CMD ["bash", "start.sh"]
+CMD ["sh", "start.sh"]

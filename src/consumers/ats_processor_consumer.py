@@ -24,9 +24,9 @@ class AtsProcessorConsumer(BaseConsumer):
             logger.error(f"Error parsing AtsSqsJobs: {e}")
             raise e
         try:
-            # await self.__ats_match_inference_service.infer_ats_match(
-            #     ats_sqs_jobs.application_id, ats_sqs_jobs.job_description_id
-            # )
+            await self.__ats_match_inference_service.infer_ats_match(
+                ats_sqs_jobs.application_id, ats_sqs_jobs.job_description_id
+            )
             logger.info(
                 f"Inferred ATS match: {ats_sqs_jobs.application_id}, {ats_sqs_jobs.job_description_id}"
             )
@@ -42,4 +42,7 @@ class AtsProcessorConsumer(BaseConsumer):
                     delay_seconds=5 * (2**ats_sqs_jobs.retry_count),
                 )
             else:
+                await self.__ats_match_inference_service.mark_application_failed(
+                    ats_sqs_jobs.application_id
+                )
                 logger.error(f"Error inferring ATS match: {e} and max retries reached")

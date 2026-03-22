@@ -2,11 +2,9 @@ from sqlalchemy import (
     BigInteger,
     Column,
     ForeignKey,
-    ForeignKeyConstraint,
     String,
     Text,
     DECIMAL,
-    LargeBinary,
 )
 from sqlalchemy.dialects.mysql import LONGBLOB
 
@@ -27,9 +25,9 @@ class JobDescription(ORMBase, BaseModel):
 class Application(ORMBase, BaseModel):
     __tablename__ = "application"
 
-    job_id = ForeignKey("job_description.id")
+    job_id = Column(BigInteger, ForeignKey("job_description.id"), nullable=False)
     name = Column(String(300), nullable=False)
-    relevance_score = Column(DECIMAL(precision=1), nullable=True)
+    relevance_score = Column(DECIMAL(precision=1, scale=1), nullable=True)
     reasoning = Column(Text, nullable=True)
     resume = Column(LONGBLOB, nullable=False)
     resume_file_type = Column(String(100), nullable=False)

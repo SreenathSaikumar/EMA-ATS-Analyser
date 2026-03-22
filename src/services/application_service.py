@@ -1,3 +1,5 @@
+import json
+
 from logging import getLogger
 from fastapi import UploadFile, status
 from fastapi.exceptions import HTTPException
@@ -7,6 +9,7 @@ from sqlalchemy.ext.asyncio import AsyncSession
 from src.common.commons_container import common_utils
 from src.repositories.sql_db.models.ats_models import Application, JobDescription
 from src.utils.enums import ProcessingStatus
+from src.dtos.responses.list_applications_response import LiteApplication
 
 logger = getLogger(__name__)
 
@@ -43,11 +46,22 @@ class ApplicationService:
 
     async def list_applications(
         self, session: AsyncSession, job_id: int
-    ) -> list[Application]:
+    ) -> list[LiteApplication]:
         try:
             self.__logger.info(f"Listing applications: {job_id}")
             applications = await Application.filter(Application.job_id == job_id)
-            return applications
+            return [
+                LiteApplication(
+                    id=application.id,
+                    name=application.name,
+                    relevance_score=application.relevance_score,
+                    reasoning=json.loads(application.reasoning),
+                    processing_status=application.processing_status,
+                    created_at=application.created_at,
+                    updated_at=application.updated_at,
+                )
+                for application in applications
+            ]
         except Exception as e:
             self.__logger.error(f"Error listing applications: {e}")
             raise e

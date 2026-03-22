@@ -1,0 +1,2 @@
+class Constants:
+    SKILL_MATCH_JACCARD_THRESHOLD = 0.6

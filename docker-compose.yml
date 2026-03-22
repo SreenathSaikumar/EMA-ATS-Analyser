@@ -2,31 +2,26 @@ services:
   api:
     build: .
     container_name: ats-analyser-api
-    # Bind to 0.0.0.0 so Docker port publishing works.
-    command:
-      - sh start.sh
     ports:
       - "8001:8001"
     environment:
-      # Database (used by src/config/env_vars.py at import time)
       SERVICE: api
       PYTHON_DOTENV_DISABLED: 1
       MYSQL_DB_HOST: ats-analyser-mysql
       MYSQL_DB_PORT: 3306
       MYSQL_DB_DATABASE: ats_analyser
-      MYSQL_DB_USERNAME: root
-      MYSQL_DB_PASSWORD: root
+      MYSQL_DB_USER: root
+      MYSQL_DB_PASS: root
       MYSQL_DB_POOL_SIZE: 5
       MYSQL_DB_MAX_OVERFLOW: 10
 
-      # Required by src/config/env_vars.py at import time (provide placeholders for local dev).
+      # Required by src/config/env_vars.py
       OPENAI_API_KEY: "dummy"
       OPENAI_API_BASE: "https://api.openai.com/v1"
       OPENAI_API_VERSION: "v1"
       OPENAI_API_MODEL: "gpt-4o-mini"
       OPENAI_API_MODEL_VERSION: "latest"
 
-      # SQS (for localstack; only needed if/when your code starts using SQS).
       AWS_ACCESS_KEY_ID: dummy
       AWS_SECRET_ACCESS_KEY: dummy
       AWS_REGION: elasticmq
@@ -41,16 +36,14 @@ services:
   consumer:
     build: .
     container_name: ats-analyser-consumer
-    command:
-      - sh start.sh
     environment:
       SERVICE: consumer
       PYTHON_DOTENV_DISABLED: 1
       MYSQL_DB_HOST: ats-analyser-mysql
       MYSQL_DB_PORT: 3306
       MYSQL_DB_DATABASE: ats_analyser
-      MYSQL_DB_USERNAME: root
-      MYSQL_DB_PASSWORD: root
+      MYSQL_DB_USER: root
+      MYSQL_DB_PASS: root
       MYSQL_DB_POOL_SIZE: 5
       MYSQL_DB_MAX_OVERFLOW: 10
 
@@ -75,15 +68,10 @@ services:
   mysql:
     image: mysql:8.0.45
     container_name: ats-analyser-mysql
-    command:
-      - mysqld
-      - --default-authentication-plugin=mysql_native_password
     restart: unless-stopped
     environment:
       MYSQL_ROOT_PASSWORD: root
       MYSQL_DATABASE: ats_analyser
-      MYSQL_USER: root
-      MYSQL_PASSWORD: root
     ports:
       - "3306:3306"
     volumes:

@@ -1,15 +1,14 @@
-from __future__ import annotations
-
 import json
 import logging
 import re
-from typing import Any, Dict, List, Optional, Set, Tuple, cast
+from typing import Dict, List, Optional, Set, cast
 
 from langchain_core.messages import HumanMessage, SystemMessage
-from langchain_openai import ChatOpenAI
-
 from pydantic import BaseModel
 
+from langchain_openai import ChatOpenAI
+
+from src.agents.prompts import PromptsManager
 from src.agents.state import (
     ExplanationOutput,
     GraphState,
@@ -20,16 +19,15 @@ from src.agents.state import (
     ResumeExperienceModel,
     ResumeSkillsExtractionOutput,
 )
+from src.comlib.llms import LLMs
+from src.utils.constants import Constants
 
 logger = logging.getLogger(__name__)
-
-# Deterministic thresholds: job-agnostic heuristics.
-SKILL_MATCH_JACCARD_THRESHOLD = 0.6
 
 
 def _build_llm() -> ChatOpenAI:
     # `temperature=0.0` makes extraction/explanation deterministic.
-    return ChatOpenAI(model="gpt-4o-mini", temperature=0.0)
+    return LLMs().get_gpt_4o_mini()
 
 
 def _extract_json_from_text(text: str) -> str:
@@ -50,20 +48,19 @@ def _extract_json_from_text(text: str) -> str:
 
 
 async def _ainvoke_json_llm(
-    prompt: str, output_model: type[BaseModel]
+    prompt: str,
+    output_model: type[BaseModel],
+    *,
+    system_content: Optional[str] = None,
 ) -> BaseModel:
     """
     Invoke an LLM to return ONLY valid JSON for `output_model`.
     """
 
     model = _build_llm()
+    system = system_content or PromptsManager.system_json_extraction()
     messages = [
-        SystemMessage(
-            content=(
-                "You are a precise ATS data extraction engine. "
-                "Return ONLY valid JSON. No markdown. No extra text."
-            )
-        ),
+        SystemMessage(content=system),
         HumanMessage(content=prompt),
     ]
 
@@ -133,7 +130,20 @@ def _tokenize_skill_tokens(normalized_skill: str) -> Set[str]:
     Deterministic tokenization for skill similarity.
     """
 
-    stop = {"and", "or", "the", "a", "an", "for", "to", "with", "of", "in", "on", "using"}
+    stop = {
+        "and",
+        "or",
+        "the",
+        "a",
+        "an",
+        "for",
+        "to",
+        "with",
+        "of",
+        "in",
+        "on",
+        "using",
+    }
     tokens = re.split(r"\s+", normalized_skill.strip().lower())
     return {t for t in tokens if t and t not in stop}
 
@@ -152,11 +162,8 @@ async def extract_resume_skills(state: GraphState) -> GraphStatePartial:
     logger.info("Node extract_resume_skills start")
     resume_text = state.get("resume_text", "") or ""
 
-    prompt = (
-        "Extract a list of the most relevant technical skills from this resume. "
-        "Return up to 30 items. Use short skill names (e.g., 'Python', 'SQL', 'React').\n\n"
-        f"RESUME:\n{resume_text}\n"
-        "Output JSON schema: {\"resume_skills\": [string...]}"
+    prompt = PromptsManager.get_extract_resume_skills_prompt().format(
+        resume_text=resume_text
     )
 
     output = cast(
@@ -173,19 +180,8 @@ async def extract_resume_experience(state: GraphState) -> GraphStatePartial:
     logger.info("Node extract_resume_experience start")
     resume_text = state.get("resume_text", "") or ""
 
-    prompt = (
-        "Extract experience summary from this resume. "
-        "Return an estimate (may be approximate) of years_total and years_relevant. "
-        "If dates/years are unclear, use 0.\n\n"
-        "Also extract up to 5 most recent role titles (e.g., 'Software Engineer', 'Data Scientist').\n\n"
-        f"RESUME:\n{resume_text}\n"
-        "Output JSON schema: {"
-        "\"resume_experience\": {"
-        "\"years_total\": number, "
-        "\"years_relevant\": number, "
-        "\"titles\": [string...]"
-        "}"
-        "}"
+    prompt = PromptsManager.get_extract_resume_experience_prompt().format(
+        resume_text=resume_text
     )
 
     raw_output = cast(
@@ -221,12 +217,8 @@ async def extract_resume_education(state: GraphState) -> GraphStatePartial:
     logger.info("Node extract_resume_education start")
     resume_text = state.get("resume_text", "") or ""
 
-    prompt = (
-        "Extract education entries from this resume. "
-        "Return a list of concise strings like 'B.Tech Computer Science - ABC University (2020)'. "
-        "Return up to 10 items.\n\n"
-        f"RESUME:\n{resume_text}\n"
-        "Output JSON schema: {\"resume_education\": [string...]}"
+    prompt = PromptsManager.get_extract_resume_education_prompt().format(
+        resume_text=resume_text
     )
 
     output = cast(
@@ -245,21 +237,13 @@ async def extract_jd_requirements(state: GraphState) -> GraphStatePartial:
     logger.info("Node extract_jd_requirements start")
     jd_text = state.get("jd_text", "") or ""
 
-    prompt = (
-        "Extract ATS-relevant requirements from this job description. "
-        "Return technical skills list (up to 30), a single years experience requirement as integer "
-        "(if not mentioned, use 0), and the primary role title (e.g., 'Software Engineer', 'Data Scientist').\n\n"
-        f"JOB DESCRIPTION:\n{jd_text}\n"
-        "Output JSON schema: {"
-        "\"jd_skills\": [string...], "
-        "\"jd_experience\": integer, "
-        "\"jd_role\": string"
-        "}"
-    )
+    prompt = PromptsManager.get_extract_jd_requirements_prompt().format(jd_text=jd_text)
 
     output = cast(
         JDRequirementsExtractionOutput,
-        await _ainvoke_json_llm(prompt=prompt, output_model=JDRequirementsExtractionOutput),
+        await _ainvoke_json_llm(
+            prompt=prompt, output_model=JDRequirementsExtractionOutput
+        ),
     )
     logger.info(
         "Node extract_jd_requirements jd_experience=%d skills=%d",
@@ -327,10 +311,10 @@ def match_skills(state: GraphState) -> GraphStatePartial:
         for rs_skill in normalized_resume_skills:
             overlap = _jaccard(jd_tokens, resume_token_map.get(rs_skill, set()))
             best = max(best, overlap)
-            if best >= SKILL_MATCH_JACCARD_THRESHOLD:
+            if best >= Constants.SKILL_MATCH_JACCARD_THRESHOLD:
                 break
 
-        if best >= SKILL_MATCH_JACCARD_THRESHOLD:
+        if best >= Constants.SKILL_MATCH_JACCARD_THRESHOLD:
             matched.append(jd_skill)
         else:
             missing.append(jd_skill)
@@ -390,9 +374,7 @@ def match_role(state: GraphState) -> GraphStatePartial:
     score = float(len(intersection)) / float(max(len(jd_tokens), 1))
     score = max(0.0, min(1.0, score))
 
-    logger.info(
-        "Node match_role score=%.3f jd_tokens=%d", score, len(jd_tokens)
-    )
+    logger.info("Node match_role score=%.3f jd_tokens=%d", score, len(jd_tokens))
     return {"role_match_score": score}
 
 
@@ -424,24 +406,22 @@ async def generate_explanation(state: GraphState) -> GraphStatePartial:
     missing = state.get("missing_skills") or []
     jd_role = state.get("jd_role") or ""
 
-    prompt = (
-        "Generate an ATS-style evaluation explanation.\n\n"
-        "Rules:\n"
-        "- Do NOT compute or change any scores. Use the numeric values provided.\n"
-        "- Output strengths and weaknesses as concise bullet-like strings.\n\n"
-        f"JOB ROLE: {jd_role}\n"
-        f"skills_match_score: {skills_score}\n"
-        f"experience_match_score: {exp_score}\n"
-        f"role_match_score: {role_score}\n"
-        f"final_score: {final_score}\n"
-        f"missing_skills: {missing}\n\n"
-        "Return JSON with: "
-        "{\"explanation\": string, \"strengths\": string[], \"weaknesses\": string[]}"
+    prompt = PromptsManager.get_generate_explanation_prompt().format(
+        jd_role_json=json.dumps(jd_role),
+        skills_score=skills_score,
+        experience_match_score=exp_score,
+        role_match_score=role_score,
+        final_score=final_score,
+        missing_skills_json=json.dumps(missing),
     )
 
     output = cast(
         ExplanationOutput,
-        await _ainvoke_json_llm(prompt=prompt, output_model=ExplanationOutput),
+        await _ainvoke_json_llm(
+            prompt=prompt,
+            output_model=ExplanationOutput,
+            system_content=PromptsManager.system_generate_explanation(),
+        ),
     )
 
     logger.info(
@@ -454,4 +434,3 @@ async def generate_explanation(state: GraphState) -> GraphStatePartial:
         "strengths": output.strengths,
         "weaknesses": output.weaknesses,
     }
-
