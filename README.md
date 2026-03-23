@@ -14,6 +14,14 @@ Interactive API docs: `http://localhost:8001/docs` (when the API is running).
 
 Disclaimer: This entire flow is a PoC and built on some resumes I have on hand and synthetic ones generated via ChatGPT. There will definitely be gaps discovered in real world use cases and tweaks and changes that may be required. This is definitely not an all-encompassing solution but rather an exploration of how a simple system for this use case can be built.
 
+The graph primarily uses GPT-4o-mini for it's processing given that it has a large enough context window to handle prompts + jd info + resume info (since I'm chunking them with the assumption that there might be potential for extremely large uploads).
+It also is fairly low on latency and was also the model of choice for us at Hiver when we built auto tagging which this implementation takes some inspiration from.
+The cons are that it can sometimes be overwhelmed with a lot of data which is why I've gone with the chunking approach.
+
+This model aspect is completely modular and any other GPT model can be dropped in simply via a change in environment variables (smaller changes may be required for reasoning models) and other providers can be added easily with langchain packages and minor code changes.
+
+Text preprocessing is done on resume text to ensure no hidden instructions/ prompt overrides are mentioned. Further processing steps are done in the graph mentioned below.
+
 The evaluation graph is built in `src/agents/ats_processor_agent.py` and invoked from `AtsMatchInferenceService` with `resume_text` and `jd_text`.
 
 ```mermaid
