@@ -183,6 +183,7 @@ Metrics printed by the script:
 2. Now hit the Application Creation API (POST `/v1/{job_id}/application`) with the name of the applicant and resume document (txt / pdf) in the form body and the id received in the previous step in place of `job_id`. This will create an application and trigger a job for the resume matching to happen asynchronously.
 3. Now hit the GET `/v1/{job_id}/application` endpoint to list all applications for that particular posting and their processing status.
 4. For processed entries, the match score will be present in the `relevance_score` field along with reasoning as to why that application was scored the way it was.
+5. A sample output is also present as a JSON in the `examples/example_processing_entry.json` file.
 
 ## Problems Encountered
 The main problem noticed with earlier graph implementations and smaller graphs was the LLMs overreliance on hard matches rather than underlying inferences from a candidates experience. It was also not adding enough weightage to required qualifications and hence smaller single responsibility nodes were added to combat these problems.
@@ -205,3 +206,6 @@ The real problems IMO, will only show up at scale across varied data across diff
 9. Langsmith or Langfuse can be setup for tracing the agentic/LLM flows as well as for prompt management rather than it being part of the codebase allowing non-technical personnel to play a part in prompt engineering as well as brainstorming on improving these flows.
 10. Finally, these services also offer features to run testing suites on agentic flows which can be used to evaluate any regressions or improvement after flow/ prompt changes.
 11. API GWs with authoriser lambdas can also be added in case of AuthN/AuthZ requirements, rate limiting etc. to take this product from PoC to Production ready.
+
+
+Lastly, please reach out to me at sreenathsaikumar@gmail.com for any queries.

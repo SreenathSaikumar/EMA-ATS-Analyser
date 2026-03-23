@@ -2,7 +2,7 @@
 name = "ats-analyser"
 version = "0.1.0"
 description = ""
-authors = ["Sreenath Saikumar"]
+authors = ["Sreenath Saikumar <sreenathsaikumar@gmail.com>"]
 readme = "README.md"
 
 [tool.poetry.dependencies]
