@@ -184,6 +184,15 @@ Metrics printed by the script:
 3. Now hit the GET `/v1/{job_id}/application` endpoint to list all applications for that particular posting and their processing status.
 4. For processed entries, the match score will be present in the `relevance_score` field along with reasoning as to why that application was scored the way it was.
 
+## Problems Encountered
+The main problem noticed with earlier graph implementations and smaller graphs was the LLMs overreliance on hard matches rather than underlying inferences from a candidates experience. It was also not adding enough weightage to required qualifications and hence smaller single responsibility nodes were added to combat these problems.
+
+Adding a judge also serves as a way to self introspect as a system and on production with tracing enabled will give us a solid insight as to why a particular inference may be right or wrong in an effectively independent step. The judge may also mark certain applications for review if it feel that a human-in-the-loop style evaluation may be required.
+
+Otherwise, this is a simple straightforward system with text processing to handle filler words etc. and does deterministic word matching where needed as well as preprocessing the input resume to avoid any sort of red teaming / overrides via hidden white characters.
+
+The real problems IMO, will only show up at scale across varied data across different domains since this service has right now largely been built from a tech bias.
+
 ## Productionisation
 1. This entire flow was written with proper production deployment in mind.
 2. The setup is dockerised and both the API and consumers can be deployed via the same Docker image with simple environment variable changes to determine whether the API or the consumer runs.
