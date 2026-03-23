@@ -1,0 +1,68 @@
+Rahul Sharma
+Bangalore, India
+rahul.sharma@email.com | +91-98XXXXXXX
+LinkedIn: linkedin.com/in/rahulsharma | GitHub: github.com/rahulsharma
+
+PROFESSIONAL SUMMARY
+Backend Software Engineer with 6+ years of experience designing, developing, and deploying scalable distributed systems. Strong expertise in Python, Java, cloud platforms, and microservices architecture. Proven ability to improve system performance, reliability, and scalability in high-growth environments.
+
+TECHNICAL SKILLS
+Languages: Python, Java, SQL
+Frameworks: FastAPI, Flask, Spring Boot
+Cloud Platforms: AWS (EC2, S3, Lambda, RDS, CloudWatch)
+Databases: PostgreSQL, MySQL, Redis
+Tools: Docker, Kubernetes, Jenkins, Git, Kafka
+Other: REST APIs, Microservices, System Design, CI/CD
+
+PROFESSIONAL EXPERIENCE
+
+Senior Software Engineer | XYZ Tech | Jan 2021 – Present
+- Designed and developed RESTful APIs using Python (FastAPI, Flask) handling over 2M daily requests
+- Led migration from monolithic architecture to microservices, reducing deployment time by 50%
+- Built event-driven systems using Kafka for asynchronous processing and improved system decoupling
+- Optimized complex SQL queries and indexing strategies, improving performance by 35–40%
+- Deployed and managed applications on AWS (EC2, S3, Lambda, RDS)
+- Implemented CI/CD pipelines using Docker, Jenkins, and Kubernetes
+- Collaborated with cross-functional teams including product managers and frontend engineers
+- Mentored junior developers and conducted technical interviews
+- Improved system monitoring and alerting using CloudWatch and logging frameworks
+
+Software Engineer | ABC Solutions | Jul 2018 – Dec 2020
+- Developed backend services using Java (Spring Boot) for enterprise applications
+- Integrated third-party APIs including payment gateways and CRM tools
+- Designed relational database schemas and worked extensively with MySQL
+- Implemented Redis caching to reduce API latency by ~20%
+- Participated in agile ceremonies including sprint planning and retrospectives
+- Fixed production issues and improved system reliability
+
+PROJECTS
+
+Distributed Job Queue System
+- Built a scalable job processing system using Python and Redis queues
+- Designed retry mechanisms and monitoring dashboards
+
+URL Shortener Service
+- Developed a high-availability system with analytics tracking
+- Used hashing techniques and caching for performance
+
+API Gateway Middleware
+- Built middleware for authentication, logging, and request routing
+
+CERTIFICATIONS
+- AWS Certified Solutions Architect – Associate
+- Python for Everybody (Coursera)
+
+ACHIEVEMENTS
+- Recognized as “Top Performer” for 2 consecutive years
+- Led internal backend architecture revamp initiative
+
+ADDITIONAL INFORMATION
+- Basic familiarity with React and frontend workflows
+- Regular participant in coding contests (LeetCode, HackerRank)
+- Interested in distributed systems and system design
+
+EDUCATION
+B.Tech in Computer Science, 2018
+
+INTERESTS
+Reading tech blogs, open-source contributions, cricket

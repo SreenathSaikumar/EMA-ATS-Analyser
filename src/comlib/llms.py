@@ -1,6 +1,6 @@
 from langchain_openai import ChatOpenAI
 
-from src.config.env_vars import GlobalConfig
+from src.config.env_vars import GlobalConfig, LLMConfig
 
 
 class LLMs:
@@ -21,3 +21,8 @@ class LLMs:
 
     def get_gpt_4o(self) -> ChatOpenAI:
         return self.__gpt_4o
+
+    def get_model(self, model_to_use: str) -> ChatOpenAI:
+        return getattr(
+            self, f"get_{model_to_use}".replace("-", "_").replace(".", "_")
+        )()

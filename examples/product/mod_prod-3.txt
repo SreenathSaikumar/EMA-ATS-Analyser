@@ -1,0 +1,33 @@
+Sneha Iyer
+Chennai, India
+sneha.iyer@email.com
+
+SUMMARY
+Associate Product Manager with 4 years of experience supporting product teams in fintech and SaaS.
+
+EXPERIENCE
+
+Associate Product Manager | FinTechCo | 2022 – Present
+- Assisted in roadmap planning for payments features
+- Coordinated with engineering and design teams
+- Helped define user stories and requirements
+- Participated in sprint reviews and retrospectives
+
+Business Analyst | DataCorp | 2019 – 2022
+- Built reports and dashboards for stakeholders
+- Analyzed user metrics and behavior patterns
+- Supported PMs in prioritizing features
+
+PROJECTS
+- Customer onboarding optimization
+- Usage analytics dashboard
+
+SKILLS
+Agile, SQL (basic), Excel, Jira
+
+NOISE
+- Limited feature ownership
+- Repetitive soft skill statements
+
+EDUCATION
+MBA

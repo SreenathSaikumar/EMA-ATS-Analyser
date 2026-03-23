@@ -1,0 +1,56 @@
+Vivek Nair
+Kochi, India
+vivek.nair@email.com
+
+SUMMARY
+Software developer with 3+ years of experience in backend and full-stack development. Looking to grow into a backend-focused engineering role.
+
+TECHNICAL SKILLS
+Languages: JavaScript, Python (basic)
+Frameworks: Node.js, Express
+Databases: MongoDB
+Tools: Git, Postman
+
+EXPERIENCE
+
+Software Developer | MidTech Solutions | Aug 2022 – Present
+- Developed REST APIs using Node.js and Express
+- Built backend features for web applications
+- Worked with MongoDB for database operations
+- Assisted in deploying applications on AWS (basic EC2 usage)
+- Collaborated with frontend developers for integration
+- Debugged and resolved production issues
+
+Junior Developer | StartupX | Jan 2021 – Jul 2022
+- Fixed bugs across backend and frontend
+- Implemented small features based on requirements
+- Assisted senior developers in development tasks
+- Learned version control and team workflows
+
+PROJECTS
+
+Blog Platform
+- CRUD application with authentication
+- Used Node.js and MongoDB
+
+Task Manager Application
+- Built REST APIs and simple frontend interface
+
+Inventory Management System (Academic)
+- Basic project with database operations
+
+ADDITIONAL INFORMATION
+- Completed online courses in backend development
+- Familiar with REST API design principles
+- Basic knowledge of cloud platforms
+- Interested in microservices architecture
+
+NOISE
+- Lists HTML/CSS prominently
+- Mentions teamwork and communication repeatedly
+
+EDUCATION
+BCA, 2020
+
+INTERESTS
+Learning new technologies, watching tech videos

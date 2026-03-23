@@ -1,0 +1,50 @@
+Neha Kapoor
+Mumbai, India
+neha.kapoor@email.com | LinkedIn: linkedin.com/in/nehakapoor | GitHub: github.com/nehakapoor
+
+SUMMARY
+Senior Product Manager with 7+ years of experience building SaaS and fintech products. Strong track record of driving product strategy, launching features, and improving user engagement through data-driven decisions.
+
+EXPERIENCE
+
+Senior Product Manager | FinTechCo | Jan 2021 – Present
+- Owned product roadmap for payments platform serving 500K+ users
+- Led cross-functional teams across engineering, design, and analytics
+- Launched 3 major features increasing revenue by 20%
+- Defined product metrics and tracked KPIs using dashboards (Amplitude, Mixpanel)
+- Conducted A/B tests to improve conversion rates by 15%
+- Wrote detailed PRDs and user stories
+
+Product Manager | SaaSify | Jul 2018 – Dec 2020
+- Managed B2B SaaS product modules for CRM integrations
+- Collaborated with engineering teams in agile sprints
+- Gathered user feedback and prioritized features
+- Launched analytics dashboards to track adoption metrics
+
+Business Analyst | DataCorp | 2016 – 2018
+- Built dashboards and reports for internal stakeholders
+- Supported product teams with insights from SQL and Excel
+
+PROJECTS
+- Internal analytics dashboard initiative (tracking user flows)
+- Customer onboarding optimization project
+- Side project: feature prioritization tool
+
+SKILLS
+Product Strategy, Roadmapping, Agile/Scrum, SQL, Data Analysis, Stakeholder Management
+
+TOOLS
+Jira, Confluence, Amplitude, Mixpanel, Google Analytics, Figma (for wireframes)
+
+CERTIFICATIONS
+- Certified Scrum Product Owner (CSPO)
+- Data Analytics for Business Leaders
+
+ADDITIONAL
+- Writes product blogs
+- Mentors junior PMs
+- Participates in product hackathons
+
+EDUCATION
+MBA, Marketing & Strategy
+B.Tech in Computer Science

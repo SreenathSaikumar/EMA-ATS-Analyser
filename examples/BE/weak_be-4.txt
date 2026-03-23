@@ -1,0 +1,50 @@
+Rakesh Kumar
+Patna, India
+rakesh.kumar@email.com
+
+OBJECTIVE
+To obtain a challenging position in a reputed organization where I can learn and grow.
+
+SKILLS
+Languages: JavaScript, Python (basic)
+Web: HTML, CSS
+Tools: VS Code, Git (basic)
+Other: MS Word, PowerPoint, Excel
+
+EXPERIENCE
+
+Intern | WebTech Pvt Ltd | Jan 2023 – Jun 2023
+- Assisted in building web pages using HTML, CSS
+- Learned basics of JavaScript and API calls
+- Fixed UI bugs and minor issues
+- Worked under supervision of senior developers
+
+PROJECTS
+
+Portfolio Website
+- Created personal website using HTML/CSS
+
+To-Do Application
+- Simple JavaScript-based task manager
+
+Calculator App
+- Built basic calculator using JS
+
+CERTIFICATIONS
+- Web Development Bootcamp (online)
+- Python Basics Course
+
+ADDITIONAL DETAILS
+- Good communication skills
+- Team player and hardworking individual
+- Willing to relocate
+
+NOISE
+- Lists hobbies like reading, cricket
+- Repeats basic skills
+
+EDUCATION
+B.Sc Computer Science, 2023
+
+INTERESTS
+Cricket, music, watching movies

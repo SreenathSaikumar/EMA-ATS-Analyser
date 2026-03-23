@@ -1,0 +1,52 @@
+Saurabh Jain
+Delhi, India
+saurabh.jain@email.com
+
+SUMMARY
+Full stack developer with 4 years of experience building web applications. Interested in backend engineering and scalable systems.
+
+TECHNICAL SKILLS
+Languages: JavaScript
+Frameworks: React, Node.js, Express
+Databases: Firebase, MongoDB
+Tools: Git, Postman
+
+EXPERIENCE
+
+Full Stack Developer | WebApps Co | Apr 2021 – Present
+- Developed frontend applications using React and Redux
+- Built backend APIs using Node.js and Express
+- Used Firebase for authentication and data storage
+- Worked with REST APIs and third-party integrations
+- Collaborated with design team for UI improvements
+
+Software Developer | CodeBase | Jul 2019 – Mar 2021
+- Worked on both frontend and backend features
+- Built APIs for internal tools
+- Maintained legacy codebases and fixed bugs
+
+PROJECTS
+
+E-commerce Application
+- Built full stack app with product and cart functionality
+
+Chat Application
+- Real-time messaging using Firebase
+
+Portfolio Website
+- Personal portfolio with projects
+
+ADDITIONAL INFORMATION
+- Learning Docker and AWS through online courses
+- Interested in backend scalability and system design
+- Familiar with basic database design concepts
+
+NOISE
+- Overemphasis on frontend work
+- Mentions “microservices” without real implementation details
+
+EDUCATION
+B.Tech Computer Science
+
+INTERESTS
+Technology blogs, startups, entrepreneurship

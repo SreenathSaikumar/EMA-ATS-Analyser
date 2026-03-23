@@ -1,0 +1,71 @@
+{
+    "id": 7,
+    "name": "Sreenath",
+    "relevance_score": 0.6,
+    "reasoning": {
+        "explanation": "The candidate demonstrates a strong educational background, achieving a perfect score in education match. However, the experience match score indicates limited relevant experience for the Software Development Engineer II role. The skills match score suggests some alignment with the required skills, but there are notable gaps in specific areas such as AWS Step Functions and collaboration, which are essential for this position.",
+        "strengths": [
+            "Strong educational background",
+            "Good alignment with role requirements",
+            "Decent skills match score"
+        ],
+        "weaknesses": [
+            "Limited relevant experience",
+            "Missing skills in AWS Step Functions",
+            "Lack of support experience",
+            "Gaps in implementation planning",
+            "Need for improved collaboration skills"
+        ],
+        "skills_match_score": 0.7647058823529411,
+        "experience_match_score": 0.3333333333333333,
+        "role_match_score": 0.75,
+        "education_match_score": 1,
+        "final_score": 0.5619607843137254,
+        "requirement_constraint_score": 0,
+        "hard_requirement_misses": [
+            {
+                "requirement_label": "software development",
+                "strictness": "hard",
+                "min_years": 3,
+                "matched": false,
+                "estimated_years": 0,
+                "confidence": 0.5,
+                "reasoning": "The candidate has close to 3 years of experience, but does not meet the strict requirement of 3+ years of non-internship software development experience."
+            }
+        ],
+        "constraint_findings": [
+            {
+                "requirement_label": "software development",
+                "strictness": "hard",
+                "min_years": 3,
+                "matched": false,
+                "estimated_years": 0,
+                "confidence": 0.5,
+                "reasoning": "The candidate has close to 3 years of experience, but does not meet the strict requirement of 3+ years of non-internship software development experience."
+            }
+        ],
+        "judge_verdict": "review",
+        "judge_confidence": 0.5,
+        "judge_notes": [
+            "Experience match score of 0.33 contradicts the positive framing in the explanation.",
+            "Hard requirement miss for software development is not acknowledged as a material risk in the decision.",
+            "Gaps in essential skills are downplayed, impacting decision clarity.",
+            "Overall narrative lacks explicit acknowledgment of critical uncertainties."
+        ],
+        "sanitization": {
+            "resume": {
+                "removed_lines": 0,
+                "trimmed_lines": 0,
+                "sanitized_markers": 0
+            },
+            "jd": {
+                "removed_lines": 0,
+                "trimmed_lines": 1,
+                "sanitized_markers": 0
+            }
+        }
+    },
+    "processing_status": "review_required",
+    "created_at": "2026-03-23T06:59:34",
+    "updated_at": "2026-03-23T06:59:53"
+}

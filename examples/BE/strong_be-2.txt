@@ -1,0 +1,63 @@
+Ankit Verma
+Hyderabad, India
+ankit.verma@email.com | GitHub: github.com/ankitv
+
+PROFILE
+Experienced backend engineer with 5+ years of experience working on scalable systems. Passionate about coding, problem-solving, and learning new technologies. Comfortable working in fast-paced environments.
+
+SKILLS
+Languages: Go, Python, JavaScript
+Databases: PostgreSQL, MongoDB
+Tools: Docker, Kubernetes, Jenkins, Git
+Technologies: REST APIs, gRPC, Microservices, CI/CD
+
+EXPERIENCE
+
+Backend Engineer | ScaleUp Systems | Mar 2020 – Present
+- Designed and implemented microservices using Go and Python
+- Built REST and gRPC APIs consumed by mobile and web applications
+- Managed deployments using Docker and Kubernetes
+- Worked on database design and optimization using PostgreSQL
+- Used MongoDB for document-based storage
+- Implemented monitoring tools using Prometheus and Grafana
+- Improved system reliability through better logging and alerting
+- Collaborated with DevOps and frontend teams regularly
+- Participated in design discussions and sprint planning
+
+Software Engineer | DevWorks | Jun 2018 – Feb 2020
+- Developed backend services using Node.js
+- Integrated authentication and third-party APIs
+- Wrote unit and integration tests
+- Worked on bug fixes and performance improvements
+
+PROJECTS
+
+Real-time Chat Application
+- Built backend using WebSockets
+- Implemented message queues for scaling
+
+GraphQL API Experiment
+- Created APIs using GraphQL for internal testing
+
+E-commerce Backend (Side Project)
+- Built APIs for product catalog and orders
+
+CERTIFICATIONS
+- Kubernetes Basics Certification
+- Introduction to Cloud Computing
+
+ADDITIONAL DETAILS
+- Writes blogs occasionally on backend engineering topics
+- Active on GitHub with small projects
+- Familiar with frontend basics (HTML, CSS, JS)
+- Interested in system design and distributed systems
+
+NOISE / EXTRA
+- Lists “team player”, “quick learner”
+- Includes basic tools like MS Excel
+
+EDUCATION
+B.E. in Information Technology
+
+INTERESTS
+Gaming, blogging, exploring new technologies

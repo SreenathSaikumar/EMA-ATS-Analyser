@@ -1,0 +1,32 @@
+Kunal Shah
+Pune, India
+kunal.shah@email.com
+
+SUMMARY
+Product Analyst transitioning into product management. 3 years of experience with analytics, dashboards, and supporting product teams.
+
+EXPERIENCE
+
+Product Analyst | GrowthCo | 2021–Present
+- Built dashboards and tracked KPIs using SQL and Excel
+- Conducted A/B tests to evaluate new features
+- Assisted PMs in prioritizing backlog items
+- Provided insights to improve user engagement
+
+Business Analyst | DataCorp | 2019–2021
+- Reported on product adoption metrics
+- Conducted market and competitor analysis
+
+PROJECTS
+- KPI tracking automation
+- Feature evaluation framework
+
+SKILLS
+SQL, Excel, Analytics, Jira, Data Visualization
+
+NOISE
+- No end-to-end product ownership
+- Heavy focus on spreadsheets rather than product impact
+
+EDUCATION
+B.Tech in Information Technology

@@ -5,7 +5,10 @@ from typing import Any
 from src.agents.ats_processor_agent import build_ats_resume_evaluation_graph
 from src.repositories.sql_db.models.ats_models import Application, JobDescription
 from src.utils.enums import ProcessingStatus
-from src.utils.resume_text import load_resume_text_from_bytes
+from src.utils.resume_text import (
+    load_resume_text_from_bytes,
+    sanitize_untrusted_document_text,
+)
 
 logger = logging.getLogger(__name__)
 
@@ -29,7 +32,13 @@ class AtsMatchInferenceService:
 
         application.relevance_score = relevance_score
         application.reasoning = reasoning_json
-        application.processing_status = ProcessingStatus.COMPLETED.value
+        reasoning_obj = json.loads(reasoning_json)
+        judge_verdict = str(reasoning_obj.get("judge_verdict") or "pass").lower()
+        application.processing_status = (
+            ProcessingStatus.REVIEW_REQUIRED.value
+            if judge_verdict == "review"
+            else ProcessingStatus.COMPLETED.value
+        )
         await application.save()
 
         return float(relevance_score)
@@ -49,13 +58,21 @@ class AtsMatchInferenceService:
             application.resume_file_type,
             application.resume_file_name,
         )
+        resume_text, resume_sanitize_meta = sanitize_untrusted_document_text(resume_text)
         if not resume_text.strip():
             raise ValueError("Resume text is empty after loading")
 
         jd_parts = ["Position: " + job_description.position]
         if job_description.description:
             jd_parts.append("Description: " + job_description.description)
-        jd_text = "\n\n".join(jd_parts)
+        jd_text_raw = "\n\n".join(jd_parts)
+        jd_text, jd_sanitize_meta = sanitize_untrusted_document_text(jd_text_raw)
+
+        logger.info(
+            "Sanitized ATS inputs resume_meta=%s jd_meta=%s",
+            resume_sanitize_meta,
+            jd_sanitize_meta,
+        )
 
         result: dict[str, Any] = await self._graph.ainvoke(
             {"resume_text": resume_text, "jd_text": jd_text}
@@ -69,7 +86,18 @@ class AtsMatchInferenceService:
             "skills_match_score": result.get("skills_match_score"),
             "experience_match_score": result.get("experience_match_score"),
             "role_match_score": result.get("role_match_score"),
+            "education_match_score": result.get("education_match_score"),
             "final_score": final_score,
+            "requirement_constraint_score": result.get("requirement_constraint_score"),
+            "hard_requirement_misses": result.get("hard_requirement_misses") or [],
+            "constraint_findings": result.get("constraint_findings") or [],
+            "judge_verdict": result.get("judge_verdict") or "pass",
+            "judge_confidence": result.get("judge_confidence") or 0.0,
+            "judge_notes": result.get("judge_notes") or [],
+            "sanitization": {
+                "resume": resume_sanitize_meta,
+                "jd": jd_sanitize_meta,
+            },
         }
 
         return final_score, json.dumps(reasoning_payload)

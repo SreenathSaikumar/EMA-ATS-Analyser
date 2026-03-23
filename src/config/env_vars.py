@@ -1,7 +1,7 @@
 import os
 
 from dotenv import load_dotenv
-from pydantic import BaseModel
+from pydantic import BaseModel, field_validator
 
 load_dotenv()
 
@@ -33,6 +33,22 @@ class OpenaiConfig(BaseModel):
     api_model_version: str = os.getenv("OPENAI_API_MODEL_VERSION")
 
 
+class LLMConfig(BaseModel):
+    model_to_use: str = os.getenv("LLM_MODEL_TO_USE", "gpt-4o-mini")
+
+    @field_validator("model_to_use")
+    def validate_model_to_use(cls, v: str) -> str:
+        if v not in [
+            "gpt-4o-mini",
+            "gpt-4o",
+            "gpt-4.1-mini",
+            "gpt-4.1",
+            "gpt-5",
+        ]:
+            raise ValueError("Invalid model to use")
+        return v
+
+
 class SqsConfig(BaseModel):
     endpoint_url: str = os.getenv("SQS_ENDPOINT_URL")
     queue_name: str = os.getenv("SQS_QUEUE_NAME")
@@ -45,6 +61,7 @@ class SqsConfig(BaseModel):
 class EnvVars(BaseModel):
     db: DbConfig = DbConfig()
     openai: OpenaiConfig = OpenaiConfig()
+    llm: LLMConfig = LLMConfig()
     sqs: SqsConfig = SqsConfig()
 
 

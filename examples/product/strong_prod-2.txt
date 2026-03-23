@@ -1,0 +1,33 @@
+Arvind Rao
+Bangalore, India
+arvind.rao@email.com | LinkedIn: linkedin.com/in/arvindrao
+
+SUMMARY
+Product Manager with 6 years of experience leading developer tools and SaaS products. Background in software engineering with strong technical understanding of APIs.
+
+EXPERIENCE
+
+Product Manager | DevTools Inc | Mar 2020 – Present
+- Led API platform product roadmap
+- Collaborated with backend engineers to design scalable endpoints
+- Increased developer adoption by 30% through improved documentation
+- Prioritized features based on analytics and feedback
+- Conducted sprint planning and backlog grooming
+
+Software Engineer | TechCorp | 2017 – 2020
+- Developed Java backend APIs for internal tools
+- Transitioned into product role due to strong stakeholder communication
+
+PROJECTS
+- Developer onboarding automation tool
+- Internal metrics visualization dashboard
+
+SKILLS
+Product Strategy, API Design, Agile, SQL, Jira, Confluence
+
+NOISE
+- Overly technical focus, less business metrics
+- Mentions GitHub contributions without major impact
+
+EDUCATION
+B.Tech in Computer Science
